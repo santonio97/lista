@@ -74,6 +74,9 @@ if (isset($_POST['borrar'])) {
                 <td>".$producto['total']."</td>
                 </tr>";
             }
+            print"<tr><td colspan=3> Total de compra</td>
+            <td>".Calcular_Precio_Total_Compra($productos)."€</td>
+            </tr>"
         ?>
     </table>
 
@@ -81,44 +84,43 @@ if (isset($_POST['borrar'])) {
     
     <h4>Insertar producto</h4>
     <form name="input" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+        Nombre&nbsp;<input type="text" name="nombre" value="<?php if (isset ($_POST['nombre'])) echo 
+        $_POST['nombre'];?>"/> 
+        Cantidad&nbsp;<input type="text" name="cantidad" value="<?php if (isset ($_POST['cantidad'])) echo 
+        $_POST['cantidad'];?>"/>
+        Precio&nbsp;<input type="text" name="precio" value="<?php if (isset ($_POST['precio'])) echo 
+        $_POST['precio'];?>"/><br><br>
+        
+        <input type="submit" value="Insertar" name="insertar"/>
         <?php
-            foreach($productos as $producto) {
-                echo '<input type="hidden" name="nombres[]" value="' . $producto['nombre'] . '" />';
-                echo '<input type="hidden" name="cantidades[]" value="' . $producto['cantidad'] . '" />';
-                echo '<input type="hidden" name="precios[]" value="' . $producto['precio'] . '" />';
-                echo '<input type="hidden" name="totales[]" value="' . $producto['total'] . '" />';
-            }
+        foreach($productos as $producto) {
+            echo '<input type="hidden" name="nombres[]" value="' . $producto['nombre'] . '" />';
+            echo '<input type="hidden" name="cantidades[]" value="' . $producto['cantidad'] . '" />';
+            echo '<input type="hidden" name="precios[]" value="' . $producto['precio'] . '" />';
+            echo '<input type="hidden" name="totales[]" value="' . $producto['total'] . '" />';
+        }
         ?>
+    </form>
 
-        Nombre:&nbsp;<input type="text" name="nombre" value="" />
-        Cantidad:&nbsp;<input type="text" name="cantidad" value="" /> 
-        Precio:&nbsp;<input type="text" name="precio" value="" /> <br /><br />
-        <input type="submit" name="insertar" value="Insertar" />
-    </form><br>
-    
-    <br/><hr/>
     <h4>Borrar producto</h4>
     <form name="input" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-                    
-                    <select name="borrado">
-                    <?php
-                    foreach($productos as $producto ){
-                         print"
-                         <option>".$producto['nombre']."</option>";
-                    }
-                    ?>
-                    <input type="submit" value="Borrar" name="borrar"/>
-                    </select>
-                    <?php
-                    
-                    foreach($productos as $producto) {
-                        echo '<input type="hidden" name="nombres[]" value="' . $producto['nombre'] . '" />';
-                        echo '<input type="hidden" name="cantidades[]" value="' . $producto['cantidad'] . '" />';
-                        echo '<input type="hidden" name="precios[]" value="' . $producto['precio'] . '" />';
-                        echo '<input type="hidden" name="totales[]" value="' . $producto['total'] . '" />';
-                    }
-                    ?>
-                </form>   
+        <select name="borrado">
+        <?php
+            foreach($productos as $producto ){
+                    print"
+                    <option>".$producto['nombre']."</option>";
+            }
+        ?>
+        <input type="submit" value="Borrar" name="borrar"/>
+        </select>
 
+        <?php foreach($productos as $producto) {
+            echo '<input type="hidden" name="nombres[]" value="' . $producto['nombre'] . '" />';
+            echo '<input type="hidden" name="cantidades[]" value="' . $producto['cantidad'] . '" />';
+            echo '<input type="hidden" name="precios[]" value="' . $producto['precio'] . '" />';
+            echo '<input type="hidden" name="totales[]" value="' . $producto['total'] . '" />';
+        }
+        ?>
+    </form>
 </body>
 </html>
